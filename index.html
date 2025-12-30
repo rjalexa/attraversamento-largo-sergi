@@ -3,58 +3,236 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Mettiamo in sicurezza l’attraversamento</title>
+  <meta name="color-scheme" content="light" />
+  <title>Attraversamento sicuro – via Mazzocammino</title>
+
   <style>
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 0; background: #fff; color:#111; }
-    .wrap { max-width: 780px; margin: 0 auto; padding: 20px; }
-    .card { border: 1px solid #ddd; border-radius: 14px; padding: 18px; margin: 14px 0; }
-    h1 { font-size: 1.55rem; margin: 0 0 8px 0; }
-    p { line-height: 1.45; }
-    .btns { display:flex; gap:10px; flex-wrap: wrap; margin-top: 12px; }
-    button, a.btn {
-      display:inline-block; padding: 12px 14px; border-radius: 12px; border: 1px solid #111;
-      background: #111; color: #fff; text-decoration:none; font-weight: 650; cursor:pointer;
+    :root{
+      --bg:#ffffff;
+      --text:#0b0b0b;
+      --muted:#222;
+      --border:#cfcfcf;
+      --card:#ffffff;
+      --btn:#111;
+      --btnText:#fff;
+      --btn2Bg:#fff;
+      --btn2Text:#111;
+
+      /* accessibilità: base font grande */
+      --base: 21px; /* puoi portare a 22–24 se vuoi */
     }
-    button.secondary, a.secondary { background:#fff; color:#111; }
-    .small { font-size: .93rem; color:#333; }
-    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size:.95rem; }
-    textarea { width:100%; min-height: 220px; padding: 12px; border-radius: 12px; border: 1px solid #ddd; font-size: 1rem; }
-    .ok { display:none; margin-top:10px; padding:10px 12px; border-radius: 12px; border:1px solid #2b7; color:#145; background:#eafff3; }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
+    }
+
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      font-size: var(--base);
+      line-height: 1.55;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    .wrap{
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 18px 16px 28px;
+    }
+
+    header{
+      margin-bottom: 14px;
+    }
+
+    h1{
+      font-size: 1.55em;
+      line-height: 1.15;
+      margin: 0 0 10px;
+      letter-spacing: -0.01em;
+    }
+
+    .lead{
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .toolbar{
+      display:flex;
+      gap:10px;
+      flex-wrap: wrap;
+      align-items:center;
+      margin: 14px 0 10px;
+    }
+
+    .toolbtn{
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 2px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      font-weight: 700;
+      cursor:pointer;
+    }
+    .toolbtn:focus-visible{ outline: 4px solid #000; outline-offset: 2px; }
+
+    .card{
+      background: var(--card);
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      margin: 14px 0;
+    }
+
+    .card h2{
+      font-size: 1.15em;
+      margin: 0 0 10px;
+    }
+
+    .steps{
+      margin: 0;
+      padding-left: 1.2em;
+    }
+    .steps li{ margin: 8px 0; }
+
+    .btnrow{
+      display:flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    a.btn, button.btn{
+      display:inline-block;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 2px solid var(--btn);
+      background: var(--btn);
+      color: var(--btnText);
+      text-decoration: none;
+      font-weight: 800;
+      cursor: pointer;
+      min-height: 52px;
+    }
+
+    a.btn.secondary, button.btn.secondary{
+      background: var(--btn2Bg);
+      color: var(--btn2Text);
+    }
+
+    /* su telefoni: pulsanti larghi e comodi */
+    @media (max-width: 520px){
+      a.btn, button.btn{
+        width: 100%;
+        text-align: center;
+      }
+    }
+
+    a.btn:focus-visible, button.btn:focus-visible{
+      outline: 4px solid #000;
+      outline-offset: 2px;
+    }
+
+    .addresses{
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 14px;
+      border: 2px dashed var(--border);
+      background: #fff;
+    }
+    .addresses p{ margin: 8px 0; }
+    .mono{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; }
+
+    .copyok{
+      display:none;
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 14px;
+      border: 2px solid #0a5;
+      background: #eafff3;
+      color: #083;
+      font-weight: 800;
+    }
+
+    textarea{
+      width:100%;
+      min-height: 240px;
+      padding: 14px;
+      border-radius: 14px;
+      border: 2px solid var(--border);
+      font-size: 1em;
+      line-height: 1.5;
+    }
+
+    .smallnote{
+      color: var(--muted);
+      margin-top: 10px;
+    }
+
+    footer{
+      margin-top: 18px;
+      color: var(--muted);
+    }
   </style>
 </head>
+
 <body>
   <div class="wrap">
-    <h1>Mettiamo in sicurezza l’attraversamento di via Mazzocammino (angolo via Filippo Raguzzini)</h1>
-    <p class="small">
-      Il 29 dicembre 2025, intorno alle 16:45, un pedone di 69 anni è stato investito mortalmente sulle strisce pedonali in questo punto.
-      Quelle strisce sono un passaggio fondamentale anche per molti studenti che dal Villaggio Azzurro vanno a piedi ai licei Majorana e Plauto.
-    </p>
+    <header>
+      <h1>Mettiamo in sicurezza l’attraversamento di via Mezzocammino<br>(angolo via Filippo Raguzzini - Largo Sergi)</h1>
+      <p class="lead">
+        Il 29 dicembre 2025, intorno alle 16:45, un pedone di 69 anni è stato investito mortalmente sulle strisce in questo punto.
+        Qui passano anche molti studenti diretti ai licei Majorana e Plauto.
+      </p>
 
-    <div class="card">
-      <p><strong>Basta 1 minuto:</strong> apri un’email già pronta e inviala. Oggetto e testo sono precompilati.</p>
-      <div class="btns">
-        <a id="mailtoLink" class="btn" href="#">Invia email (precompilata)</a>
-        <button id="copyBtn" class="secondary">Copia il testo</button>
+      <div class="toolbar" aria-label="Strumenti per la lettura">
+        <button class="toolbtn" id="bigger" type="button" aria-label="Aumenta dimensione del testo">A+</button>
+        <button class="toolbtn" id="smaller" type="button" aria-label="Riduci dimensione del testo">A-</button>
+        <button class="toolbtn" id="reset" type="button" aria-label="Ripristina dimensione del testo">Reset</button>
       </div>
-      <div id="copied" class="ok">Testo copiato negli appunti. Ora puoi incollarlo nella tua email.</div>
-      <p class="small">
-        <strong>Destinatario:</strong> paola.angelucci@comune.roma.it<br>
-        <strong>Per conoscenza:</strong> tordecenci.spinaceto@gmail.com
-      </p>
-    </div>
+    </header>
 
-    <div class="card">
-      <p><strong>Testo dell’email (puoi modificare nome/firma):</strong></p>
-      <textarea id="emailBody" readonly></textarea>
-      <p class="small">
-        Se il tasto “Invia email” non funziona sul tuo telefono, apri la tua app di posta e invia manualmente ai destinatari indicati sopra,
-        incollando il testo.
-      </p>
-    </div>
+    <section class="card" aria-labelledby="ctaTitle">
+      <h2 id="ctaTitle">Basta 1 minuto</h2>
+      <ol class="steps">
+        <li>Apri un’email già pronta (testo e oggetto sono precompilati)</li>
+        <li>Premi <strong>Invia</strong></li>
+      </ol>
 
-    <p class="small">
-      Nota: il testo evita toni aggressivi e chiede misure concrete (semaforo, rialzo, autovelox, ecc.) e una risposta con tempi e responsabilità.
-    </p>
+      <div class="btnrow">
+        <a id="mailtoLink" class="btn" href="#" role="button" aria-label="Apri email precompilata">
+          1) Apri email pronta
+        </a>
+        <button id="copyBtn" class="btn secondary" type="button" aria-label="Copia il testo dell'email">
+          2) Copia il testo
+        </button>
+      </div>
+
+      <div id="copied" class="copyok" role="alert" aria-live="polite">
+        Testo copiato. Ora puoi incollarlo nella tua email.
+      </div>
+
+      <div class="addresses" aria-label="Indirizzi email">
+        <p><strong>Destinatario (A):</strong> <span class="mono">paola.angelucci@comune.roma.it</span></p>
+        <p><strong>Per conoscenza (CC):</strong> <span class="mono">tordecenci.spinaceto@gmail.com</span></p>
+      </div>
+
+      <p class="smallnote">
+        Se il pulsante “Apri email pronta” non funziona sul tuo telefono, usa “Copia il testo” e invia manualmente agli indirizzi sopra.
+      </p>
+    </section>
+
+    <section class="card" aria-labelledby="txtTitle">
+      <h2 id="txtTitle">Testo dell’email (puoi cambiare nome e firma)</h2>
+      <textarea id="emailBody" readonly aria-label="Testo email pronto da copiare"></textarea>
+    </section>
+
+    <footer>
+      <p>
+        Richiediamo misure concrete per ridurre la velocità e rendere l’attraversamento sicuro (es. semaforo pedonale, attraversamento rialzato/dosso, migliore illuminazione, controlli velocità).
+      </p>
+    </footer>
   </div>
 
 <script>
@@ -65,18 +243,18 @@
   // Oggetto
   const subject = "Richiesta urgente: messa in sicurezza strisce pedonali via Mazzocammino angolo via Filippo Raguzzini";
 
-  // Corpo
+  // Corpo (testo semplice, leggibile, con richiesta di risposta)
   const body = `
 Gentile Assessora Paola Angelucci,
-sono un residente della zona e Le scrivo per chiedere un intervento urgente di messa in sicurezza delle strisce pedonali in via Mezzocammino angolo via Filippo Raguzzini (davanti Largo Sergi).
+sono un residente della zona e Le scrivo per chiedere un intervento urgente di messa in sicurezza delle strisce pedonali in via Mazzocammino angolo via Filippo Raguzzini.
 
-Il 29 dicembre 2025, intorno alle 16:45, una vettura diretta verso Casal Brunori ha investito mortalmente un pedone di 69 anni sulle strisce. In quel tratto le auto percorrono spesso la strada a velocità elevate e la sola segnaletica non è sufficiente. Inoltre, questo attraversamento è un passaggio fondamentale per molti studenti che dal Villaggio Azzurro raggiungono a piedi i licei Majorana e Plauto.
+Il 29 dicembre 2025, intorno alle 16:45, un pedone di 69 anni è stato investito mortalmente sulle strisce. In quel tratto le auto percorrono spesso la strada a velocità elevate e la sola segnaletica non è sufficiente. Inoltre, questo attraversamento è un passaggio fondamentale per molti studenti che dal Villaggio Azzurro raggiungono a piedi i licei Majorana e Plauto.
 
-Chiedo che vengano adottate misure efficaci e verificabili per ridurre la velocità e garantire l’attraversamento in sicurezza, ad esempio:
-- rialzo/dosso o attraversamento rialzato (traffic calming)
+Chiedo misure efficaci per ridurre la velocità e garantire l’attraversamento in sicurezza, ad esempio:
+- attraversamento rialzato/dosso (traffic calming)
 - semaforo pedonale con chiamata o lampeggianti ad alta visibilità
-- migliore illuminazione e segnaletica orizzontale/verticale ad alta visibilità
-- controllo velocità/enforcement (autovelox o dispositivi equivalenti), ove possibile
+- migliore illuminazione e segnaletica ad alta visibilità
+- controlli velocità/enforcement (autovelox o dispositivi equivalenti), ove possibile
 
 Le chiedo cortesemente di indicare:
 1) quali interventi immediati verranno disposti,
@@ -85,32 +263,60 @@ Le chiedo cortesemente di indicare:
 
 Grazie per l’attenzione.
 Cordiali saluti,
-[VOSTRO NOME E COGNOME]
-
+[vostro NOME E COGNOME]
+[Quartiere / recapito (facoltativo)]
 `.trim();
 
   // Popola textarea
   document.getElementById("emailBody").value = body;
 
-  // Crea mailto (URL-encoding)
+  // Mailto (encoding)
   function enc(s){ return encodeURIComponent(s); }
   const mailto = `mailto:${to}?cc=${enc(cc)}&subject=${enc(subject)}&body=${enc(body)}`;
   document.getElementById("mailtoLink").href = mailto;
 
   // Copia testo
+  const copied = document.getElementById("copied");
   document.getElementById("copyBtn").addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText(body);
-      document.getElementById("copied").style.display = "block";
-      setTimeout(()=>document.getElementById("copied").style.display = "none", 3500);
+      copied.style.display = "block";
+      setTimeout(()=>copied.style.display = "none", 4500);
     } catch(e) {
-      // Fallback: seleziona il testo
+      // fallback
       const t = document.getElementById("emailBody");
       t.focus(); t.select();
       document.execCommand("copy");
-      document.getElementById("copied").style.display = "block";
-      setTimeout(()=>document.getElementById("copied").style.display = "none", 3500);
+      copied.style.display = "block";
+      setTimeout(()=>copied.style.display = "none", 4500);
     }
+  });
+
+  // Controllo dimensione testo (A+/A-/Reset)
+  const root = document.documentElement;
+  const min = 18, max = 28, step = 2;
+  const key = "fontSizeBasePx";
+
+  function setBase(px){
+    const val = Math.max(min, Math.min(max, px));
+    root.style.setProperty("--base", val + "px");
+    localStorage.setItem(key, String(val));
+  }
+
+  const saved = parseInt(localStorage.getItem(key) || "", 10);
+  if (!Number.isNaN(saved)) setBase(saved);
+
+  document.getElementById("bigger").addEventListener("click", () => {
+    const cur = parseInt(getComputedStyle(root).getPropertyValue("--base"), 10) || 21;
+    setBase(cur + step);
+  });
+  document.getElementById("smaller").addEventListener("click", () => {
+    const cur = parseInt(getComputedStyle(root).getPropertyValue("--base"), 10) || 21;
+    setBase(cur - step);
+  });
+  document.getElementById("reset").addEventListener("click", () => {
+    localStorage.removeItem(key);
+    root.style.setProperty("--base", "21px");
   });
 </script>
 </body>

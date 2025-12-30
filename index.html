@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mettiamo in sicurezza l’attraversamento</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 0; background: #fff; color:#111; }
+    .wrap { max-width: 780px; margin: 0 auto; padding: 20px; }
+    .card { border: 1px solid #ddd; border-radius: 14px; padding: 18px; margin: 14px 0; }
+    h1 { font-size: 1.55rem; margin: 0 0 8px 0; }
+    p { line-height: 1.45; }
+    .btns { display:flex; gap:10px; flex-wrap: wrap; margin-top: 12px; }
+    button, a.btn {
+      display:inline-block; padding: 12px 14px; border-radius: 12px; border: 1px solid #111;
+      background: #111; color: #fff; text-decoration:none; font-weight: 650; cursor:pointer;
+    }
+    button.secondary, a.secondary { background:#fff; color:#111; }
+    .small { font-size: .93rem; color:#333; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size:.95rem; }
+    textarea { width:100%; min-height: 220px; padding: 12px; border-radius: 12px; border: 1px solid #ddd; font-size: 1rem; }
+    .ok { display:none; margin-top:10px; padding:10px 12px; border-radius: 12px; border:1px solid #2b7; color:#145; background:#eafff3; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Mettiamo in sicurezza l’attraversamento di via Mazzocammino (angolo via Filippo Raguzzini)</h1>
+    <p class="small">
+      Il 29 dicembre 2025, intorno alle 16:45, un pedone di 69 anni è stato investito mortalmente sulle strisce pedonali in questo punto.
+      Quelle strisce sono un passaggio fondamentale anche per molti studenti che dal Villaggio Azzurro vanno a piedi ai licei Majorana e Plauto.
+    </p>
+
+    <div class="card">
+      <p><strong>Basta 1 minuto:</strong> apri un’email già pronta e inviala. Oggetto e testo sono precompilati.</p>
+      <div class="btns">
+        <a id="mailtoLink" class="btn" href="#">Invia email (precompilata)</a>
+        <button id="copyBtn" class="secondary">Copia il testo</button>
+      </div>
+      <div id="copied" class="ok">Testo copiato negli appunti. Ora puoi incollarlo nella tua email.</div>
+      <p class="small">
+        <strong>Destinatario:</strong> paola.angelucci@comune.roma.it<br>
+        <strong>Per conoscenza:</strong> tordecenci.spinaceto@gmail.com
+      </p>
+    </div>
+
+    <div class="card">
+      <p><strong>Testo dell’email (puoi modificare nome/firma):</strong></p>
+      <textarea id="emailBody" readonly></textarea>
+      <p class="small">
+        Se il tasto “Invia email” non funziona sul tuo telefono, apri la tua app di posta e invia manualmente ai destinatari indicati sopra,
+        incollando il testo.
+      </p>
+    </div>
+
+    <p class="small">
+      Nota: il testo evita toni aggressivi e chiede misure concrete (semaforo, rialzo, autovelox, ecc.) e una risposta con tempi e responsabilità.
+    </p>
+  </div>
+
+<script>
+  // Destinatari
+  const to = "paola.angelucci@comune.roma.it";
+  const cc = "tordecenci.spinaceto@gmail.com";
+
+  // Oggetto
+  const subject = "Richiesta urgente: messa in sicurezza strisce pedonali via Mazzocammino angolo via Filippo Raguzzini";
+
+  // Corpo
+  const body = `
+Gentile Assessora Paola Angelucci,
+sono un residente della zona e Le scrivo per chiedere un intervento urgente di messa in sicurezza delle strisce pedonali in via Mezzocammino angolo via Filippo Raguzzini (davanti Largo Sergi).
+
+Il 29 dicembre 2025, intorno alle 16:45, una vettura diretta verso Casal Brunori ha investito mortalmente un pedone di 69 anni sulle strisce. In quel tratto le auto percorrono spesso la strada a velocità elevate e la sola segnaletica non è sufficiente. Inoltre, questo attraversamento è un passaggio fondamentale per molti studenti che dal Villaggio Azzurro raggiungono a piedi i licei Majorana e Plauto.
+
+Chiedo che vengano adottate misure efficaci e verificabili per ridurre la velocità e garantire l’attraversamento in sicurezza, ad esempio:
+- rialzo/dosso o attraversamento rialzato (traffic calming)
+- semaforo pedonale con chiamata o lampeggianti ad alta visibilità
+- migliore illuminazione e segnaletica orizzontale/verticale ad alta visibilità
+- controllo velocità/enforcement (autovelox o dispositivi equivalenti), ove possibile
+
+Le chiedo cortesemente di indicare:
+1) quali interventi immediati verranno disposti,
+2) il cronoprogramma,
+3) l’ufficio responsabile e un riferimento per aggiornamenti.
+
+Grazie per l’attenzione.
+Cordiali saluti,
+[VOSTRO NOME E COGNOME]
+
+`.trim();
+
+  // Popola textarea
+  document.getElementById("emailBody").value = body;
+
+  // Crea mailto (URL-encoding)
+  function enc(s){ return encodeURIComponent(s); }
+  const mailto = `mailto:${to}?cc=${enc(cc)}&subject=${enc(subject)}&body=${enc(body)}`;
+  document.getElementById("mailtoLink").href = mailto;
+
+  // Copia testo
+  document.getElementById("copyBtn").addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(body);
+      document.getElementById("copied").style.display = "block";
+      setTimeout(()=>document.getElementById("copied").style.display = "none", 3500);
+    } catch(e) {
+      // Fallback: seleziona il testo
+      const t = document.getElementById("emailBody");
+      t.focus(); t.select();
+      document.execCommand("copy");
+      document.getElementById("copied").style.display = "block";
+      setTimeout(()=>document.getElementById("copied").style.display = "none", 3500);
+    }
+  });
+</script>
+</body>
+</html>

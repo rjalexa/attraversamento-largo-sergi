@@ -142,6 +142,8 @@
       background: #fff;
     }
     .addresses p{ margin: 8px 0; }
+    .addresses ul{ margin: 8px 0; padding-left: 1.2em; }
+    .addresses li{ margin: 4px 0; font-size: 0.9em; }
     .mono{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; }
 
     .copyok{
@@ -182,7 +184,7 @@
     <header>
       <h1>Incidente mortale a via Mezzocammino<br>(davanti via Filippo Raguzzini - Largo Sergi)</h1>
       <p class="lead">
-        Il 29 dicembre 2025, intorno alle 16:45, un pedone di 69 anni è stato investito mortalmente sulle strisce in questo punto.
+        Il 29 dicembre 2025, attorno alle 16:30, un uomo di 69 anni, Mauro Condarelli, è stato investito e ucciso mentre attraversava la strada all'altezza dell'incrocio tra via di Mezzocammino e via Filippo Raguzzini.
         Qui passano anche molti studenti diretti ai licei Majorana e Plauto. Ogni giorno le auto che corrono mettono in serio pericolo altre persone.
       </p>
 
@@ -196,7 +198,7 @@
     <section class="card" aria-labelledby="ctaTitle">
       <h2 id="ctaTitle">Basta un tuo minuto. Non rimanere indifferente.</h2>
       <ol class="steps">
-        <li>Apri un’email già pronta (testo e oggetto sono precompilati)</li>
+        <li>Apri un'email già pronta (testo e oggetto sono precompilati)</li>
         <li>Premi <strong>Invia</strong></li>
       </ol>
 
@@ -214,54 +216,73 @@
       </div>
 
       <div class="addresses" aria-label="Indirizzi email">
-        <p><strong>Destinatario (A):</strong> <span class="mono">paola.angelucci@comune.roma.it</span></p>
-        <p><strong>Per conoscenza (CC):</strong> <span class="mono">tordecenci.spinaceto@gmail.com</span></p>
+        <p><strong>Destinatari (in copia nascosta BCC per privacy):</strong></p>
+        <ul>
+          <li><span class="mono">paola.angelucci@comune.roma.it</span> - Assessora del Municipio IX di Roma per Lavori Pubblici, Mobilità e Scuola</li>
+          <li><span class="mono">tordecenci.spinaceto@gmail.com</span> - Comitato di Quartiere Spinaceto</li>
+          <li><span class="mono">consulta.sicurezza@romamobilita.it</span> - Consulta Cittadina sicurezza stradale</li>
+          <li><span class="mono">protocollo.gabinettosindaco@pec.comune.roma.it</span> - Gabinetto del Sindaco</li>
+          <li><span class="mono">roberto.vagaggini@comune.roma.it</span> - Ufficio Semafori, Centrale del Traffico e Tecnologia ITS</li>
+          <li><span class="mono">assessorato.mobilita@comune.roma.it</span> - Eugenio Patanè - Assessore alla Mobilità Comune di Roma</li>
+          <li><span class="mono">tiziana.rossetti@comune.roma.it</span> - Tiziana Rossetti - Ufficio Discipline Speciali di Traffico</li>
+          <li><span class="mono">emanuele.pietrolati@comune.roma.it</span> - Emanuele Pietrolati - Ufficio Manutenzione Strade e Viabilità Municipale</li>
+        </ul>
       </div>
 
       <p class="smallnote">
-        Se il pulsante “Apri email pronta” non funziona sul tuo telefono, usa “Copia il testo” e invia manualmente agli indirizzi sopra.
+        <strong>Nota:</strong> Alcuni client email potrebbero non supportare BCC nei link mailto. In tal caso, usa "Copia il testo" e inserisci manualmente i destinatari in BCC.
       </p>
     </section>
 
     <section class="card" aria-labelledby="txtTitle">
-      <h2 id="txtTitle">Testo dell’email (puoi cambiare nome e firma)</h2>
+      <h2 id="txtTitle">Testo dell'email (puoi cambiare nome e firma)</h2>
       <textarea id="emailBody" readonly aria-label="Testo email pronto da copiare"></textarea>
     </section>
 
     <footer>
       <p>
-        Richiediamo misure concrete per ridurre la velocità e rendere l’attraversamento sicuro (es. semaforo pedonale, attraversamento rialzato/dosso, migliore illuminazione, controlli velocità).
+        Richiediamo misure concrete per ridurre la velocità e rendere l'attraversamento sicuro (es. semaforo pedonale, attraversamento rialzato/dosso, migliore illuminazione, controlli velocità).
       </p>
     </footer>
   </div>
 
 <script>
-  // Destinatari
-  const to = "paola.angelucci@comune.roma.it";
-  const cc = "tordecenci.spinaceto@gmail.com";
+  // Destinatari (tutti in BCC per privacy)
+  const recipients = [
+    { email: "paola.angelucci@comune.roma.it", desc: "Assessora del Municipio IX di Roma per Lavori Pubblici, Mobilità e Scuola" },
+    { email: "tordecenci.spinaceto@gmail.com", desc: "Comitato di Quartiere Spinaceto" },
+    { email: "consulta.sicurezza@romamobilita.it", desc: "Consulta Cittadina sicurezza stradale" },
+    { email: "protocollo.gabinettosindaco@pec.comune.roma.it", desc: "Gabinetto del Sindaco" },
+    { email: "roberto.vagaggini@comune.roma.it", desc: "Ufficio Semafori, Centrale del Traffico e Tecnologia ITS" },
+    { email: "assessorato.mobilita@comune.roma.it", desc: "Eugenio Patanè - Assessore alla Mobilità Comune di Roma" },
+    { email: "tiziana.rossetti@comune.roma.it", desc: "Ufficio Discipline Speciali di Traffico" },
+    { email: "emanuele.pietrolati@comune.roma.it", desc: "Ufficio Manutenzione Strade e Viabilità Municipale" }
+  ];
+  
+  const bccList = recipients.map(r => r.email).join(",");
 
   // Oggetto
   const subject = "Richiesta urgente: messa in sicurezza strisce pedonali via Mezzocammino angolo via Filippo Raguzzini";
 
   // Corpo (testo semplice, leggibile, con richiesta di risposta)
   const body = `
-Gentile Assessora Paola Angelucci,
-sono un residente della zona e Le scrivo per chiedere un intervento urgente di messa in sicurezza delle strisce pedonali in via Mezzocammino angolo via Filippo Raguzzini.
+Spettabili Autorità,
+Vi scrivo per chiedere un intervento urgente di messa in sicurezza delle strisce pedonali in via Mezzocammino angolo via Filippo Raguzzini, nel IX municipio.
 
-Il 29 dicembre 2025, intorno alle 16:45, un pedone di 69 anni è stato investito mortalmente sulle strisce. In quel tratto le auto percorrono spesso la strada a velocità elevate e la sola segnaletica non è sufficiente. Inoltre, questo attraversamento è un passaggio fondamentale per molti studenti che dal Villaggio Azzurro raggiungono a piedi i licei Majorana e Plauto.
+Il 29 dicembre 2025, attorno alle 16:30, un uomo di 69 anni, Mauro Condarelli, è stato investito e ucciso mentre attraversava la strada all'altezza di questo incrocio. Come riportato dalla cronaca (https://www.romatoday.it/cronaca/incidente-stradale/roma-29-dicembre-2025-morto-mezzocammino.html), in quel tratto le auto percorrono spesso la strada a velocità elevate e la sola segnaletica non è sufficiente. Inoltre, segnalo che questo attraversamento è un passaggio fondamentale per molti studenti che dal Villaggio Azzurro raggiungono a piedi i licei Majorana e Plauto.
 
-Chiedo misure efficaci per ridurre la velocità e garantire l’attraversamento in sicurezza, ad esempio:
-- attraversamento rialzato/dosso (traffic calming)
+Chiedo misure efficaci per ridurre la velocità e garantire l'attraversamento in sicurezza, ad esempio:
+- attraversamento rialzato/dosso (similmente a quelli gia' posizionati in Via Gigliozzi e Via Maestrini a seguito di altri gravi episodi)
 - semaforo pedonale con chiamata o lampeggianti ad alta visibilità
-- migliore illuminazione e segnaletica ad alta visibilità
+- migliore illuminazione e segnaletica ad alta visibilità (specialmente dal lato nascosto da una curva a venti metri)
 - controlli velocità/enforcement (autovelox o dispositivi equivalenti), ove possibile
 
-Le chiedo cortesemente di indicare:
+Vi chiedo cortesemente di indicare:
 1) quali interventi immediati verranno disposti,
 2) il cronoprogramma,
-3) l’ufficio responsabile e un riferimento per aggiornamenti.
+3) l'ufficio responsabile e un riferimento per aggiornamenti.
 
-Grazie per l’attenzione.
+Grazie per l'attenzione. Evitiamo altre tragedie.
 Cordiali saluti,
 [vostro NOME E COGNOME]
 [Quartiere / recapito (facoltativo)]
@@ -270,9 +291,9 @@ Cordiali saluti,
   // Popola textarea
   document.getElementById("emailBody").value = body;
 
-  // Mailto (encoding)
+  // Mailto (encoding) - usando BCC
   function enc(s){ return encodeURIComponent(s); }
-  const mailto = `mailto:${to}?cc=${enc(cc)}&subject=${enc(subject)}&body=${enc(body)}`;
+  const mailto = `mailto:?bcc=${enc(bccList)}&subject=${enc(subject)}&body=${enc(body)}`;
   document.getElementById("mailtoLink").href = mailto;
 
   // Copia testo
